@@ -19,9 +19,9 @@ export class SmartContractsEventsConfigService {
     },
     {
       name: 'SimpleStorage2',
+      address: '0x0d4b13ab292c7E6A43f9616f6beFD39Be1a569eD',
       rpc_url: this.configService.get<string>('NODE_RPC_URL'),
       wallet_pk: this.configService.get<string>('WALLET_PRIVATE_KEY'),
-      address: '0x0d4b13ab292c7E6A43f9616f6beFD39Be1a569eD',
       abi: SimpleStorageAbi.abi,
       events: ['DataChanged'],
     },

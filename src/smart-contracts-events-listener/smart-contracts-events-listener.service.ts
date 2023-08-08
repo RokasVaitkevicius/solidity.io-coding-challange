@@ -31,14 +31,18 @@ export class SmartContractsEventsListenerService {
   }
 
   private handleEvent(...data: any[]): void {
-    // Last element in listener params is event payload
-    const eventPayload: ContractEventPayload = data.pop();
+    try {
+      // Last element in listener params is event payload
+      const eventPayload: ContractEventPayload = data.pop();
 
-    this.logger.log('Event received: ' + eventPayload.eventName);
+      this.logger.log('Event received: ' + eventPayload.eventName);
 
-    return this.eventsGatewayService.emitEvent(
-      eventPayload.eventName,
-      stringifyBigInts(data),
-    );
+      return this.eventsGatewayService.emitEvent(
+        eventPayload.eventName,
+        stringifyBigInts(data),
+      );
+    } catch (error) {
+      this.logger.error('Error handling event: ' + error);
+    }
   }
 }

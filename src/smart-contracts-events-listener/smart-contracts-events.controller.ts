@@ -12,20 +12,24 @@ export class SmartContractsEventsController {
   // It's not dynamic etc. so use it at your own risk
   @Get('trigger-events')
   async triggerContract(): Promise<any> {
-    const contractCalls: Promise<any>[] = [];
     const contractsConfig = this.smartContractsEventsConfigService.getConfig();
 
-    contractsConfig.forEach((contractConfig) => {
-      const provider = new ethers.JsonRpcProvider(contractConfig.rpc_url);
-      const wallet = new ethers.Wallet(contractConfig.wallet_pk, provider);
-      const contract = new ethers.Contract(
-        contractConfig.address,
-        contractConfig.abi,
-        wallet,
-      );
+    const contractCalls: Promise<any>[] = contractsConfig.reduce(
+      (calls, contractConfig) => {
+        const provider = new ethers.JsonRpcProvider(contractConfig.rpc_url);
+        const wallet = new ethers.Wallet(contractConfig.wallet_pk, provider);
+        const contract = new ethers.Contract(
+          contractConfig.address,
+          contractConfig.abi,
+          wallet,
+        );
 
-      contractCalls.push(contract.set(Math.floor(Math.random() * 100)));
-    });
+        calls.push(contract.set(Math.floor(Math.random() * 100)));
+
+        return calls;
+      },
+      [],
+    );
 
     return Promise.all(contractCalls);
   }

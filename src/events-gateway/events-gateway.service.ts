@@ -26,7 +26,14 @@ export class EventsGatewayService
   }
 
   emitEvent(eventName: string, data: string): void {
-    this.logger.log(`Emitting event: ${eventName}`);
-    this.server.emit(eventName, data);
+    try {
+      this.logger.log(`Emitting event: ${eventName}`);
+      this.server.emit(eventName, data);
+    } catch (error) {
+      this.logger.error(
+        `Error emitting event: ${eventName} with data: ${data}`,
+        error,
+      );
+    }
   }
 }
