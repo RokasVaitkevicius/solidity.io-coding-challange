@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -11,20 +12,21 @@ import { Server } from 'socket.io';
 export class EventsGatewayService
   implements OnGatewayConnection, OnGatewayDisconnect
 {
+  private readonly logger = new Logger(EventsGatewayService.name);
+
   @WebSocketServer()
   server: Server;
 
   handleConnection(client: any): any {
-    console.log(`Client connected: ${client?.id}`);
+    this.logger.log(`Client connected: ${client?.id}`);
   }
 
   handleDisconnect(client: any): any {
-    console.log(`Client disconnected: ${client?.id}`);
+    this.logger.log(`Client disconnected: ${client?.id}`);
   }
 
   emitEvent(eventName: string, data: string): void {
-    console.log(`Emitting event: ${eventName}`);
-    console.log(data);
+    this.logger.log(`Emitting event: ${eventName}`);
     this.server.emit(eventName, data);
   }
 }

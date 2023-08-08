@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ContractEventPayload, ethers } from 'ethers';
 import { EventsGatewayService } from 'src/events-gateway/events-gateway.service';
 import { SmartContractsEventsConfigService } from 'src/smart-contracts-events-config/smart-contracts-events-config.service';
@@ -6,6 +6,10 @@ import { stringifyBigInts } from 'src/utils/replacer';
 
 @Injectable()
 export class SmartContractsEventsListenerService {
+  private readonly logger = new Logger(
+    SmartContractsEventsListenerService.name,
+  );
+
   constructor(
     private smartContractsEventsConfigService: SmartContractsEventsConfigService,
     private eventsGatewayService: EventsGatewayService,
@@ -29,6 +33,8 @@ export class SmartContractsEventsListenerService {
   private handleEvent(...data: any[]): void {
     // Last element in listener params is event payload
     const eventPayload: ContractEventPayload = data.pop();
+
+    this.logger.log('Event received: ' + eventPayload.eventName);
 
     return this.eventsGatewayService.emitEvent(
       eventPayload.eventName,
