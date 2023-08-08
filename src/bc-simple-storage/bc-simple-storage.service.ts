@@ -2,13 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ethers } from 'ethers';
 import SimpleStorageAbi from './abi/SimpleStorage.json';
+import { BcSimpleStorageEventsGateway } from './bc-simple-storage.events.gateway';
 
 @Injectable()
 export class BcSimpleStorageService {
   private contract;
   private wallet;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private bcSimpleStorageEventsGateway: BcSimpleStorageEventsGateway,
+  ) {
     const provider = new ethers.JsonRpcProvider(
       this.configService.get<string>('NODE_RPC_URL'),
     );
@@ -27,7 +31,7 @@ export class BcSimpleStorageService {
     );
 
     // Listen for the specific event
-    this.contract.on('DataChanged', this.handleDataChanged);
+    this.contract.on('DataChanged', this.handleDataChanged.bind(this));
   }
 
   async triggerSmartContractMethod(): Promise<any> {
@@ -36,6 +40,8 @@ export class BcSimpleStorageService {
 
   private handleDataChanged(from, to, event) {
     console.log('DataChanged event', from, to, event);
-    // You'll send the data to WebSocket here
+    this.bcSimpleStorageEventsGateway.emitDataChanged(
+      JSON.stringify({ from, to, event }),
+    );
   }
 }
