@@ -8,7 +8,7 @@ It listens to events coming from the smart contract and forwards them through th
 
 In order to run this app you need to have to deploy smart contract to a testnet and have the address of the deployed contract.
 
-How to do that can be found in `smart-contract/README.md`.
+How to do that can be found in `util/smart-contract/README.md`.
 
 ## Configuration
 
