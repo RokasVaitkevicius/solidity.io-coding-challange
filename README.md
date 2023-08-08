@@ -62,7 +62,7 @@ To test it, open `util/ws-test.html` in your browser. New data will appear in th
 To trigger an event on the smart contract after running the app, you can use the following endpoint:
 `http://localhost:3000/smart-contracts-events/trigger-events`
 
-It will call `set` on all smart contracts and which trigger the event.
+It will call `set` on all smart contracts and which trigger the event. I know it's not the best approach, but it's just for testing purposes.
 
 ## Test
 
