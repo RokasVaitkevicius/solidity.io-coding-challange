@@ -8,8 +8,10 @@ export class SmartContractsEventsController {
     private smartContractsEventsConfigService: SmartContractsEventsConfigService,
   ) {}
 
-  // This is just for testing purposes
-  // It's not dynamic etc. so use it at your own risk
+  /**
+   * This is just for testing purposes
+   * It's not dynamic etc. so use it at your own risk
+   */
   @Get('trigger-events')
   async triggerContract(): Promise<any> {
     const contractsConfig = this.smartContractsEventsConfigService.getConfig();
@@ -24,6 +26,8 @@ export class SmartContractsEventsController {
           wallet,
         );
 
+        // Because it's just used for testing purposes it always calls set method
+        // and sets random number
         calls.push(contract.set(Math.floor(Math.random() * 100)));
 
         return calls;

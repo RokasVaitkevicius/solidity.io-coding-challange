@@ -14,6 +14,8 @@ export class SmartContractsEventsListenerService {
     private smartContractsEventsConfigService: SmartContractsEventsConfigService,
     private eventsGatewayService: EventsGatewayService,
   ) {
+    // Get contracts configs and for each contract and each event a listener
+    // When listener is called call handleEvent method
     const contractsConfig = this.smartContractsEventsConfigService.getConfig();
 
     contractsConfig.forEach((contractConfig) => {
@@ -30,6 +32,11 @@ export class SmartContractsEventsListenerService {
     });
   }
 
+  /**
+   * Basically acts a proxy between contract event and websocket
+   * Only thing it does besides forwarding data is it stringifies data
+   * because ethers.js doesn't do it by default
+   */
   private handleEvent(...data: any[]): void {
     try {
       // Last element in listener params is event payload

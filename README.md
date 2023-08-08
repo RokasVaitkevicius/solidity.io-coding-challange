@@ -51,6 +51,19 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Test websocket
+
+To test websocket simpler I've created a simple html page that connects to the websocket and logs the events.
+
+To test it, open `util/ws-test.html` in your browser. New data will appear in the console.
+
+## Test smart contract
+
+To trigger an event on the smart contract after running the app, you can use the following endpoint:
+`http://localhost:3000/smart-contracts-events/trigger-events`
+
+It will call `set` on all smart contracts and which trigger the event.
+
 ## Test
 
 ```bash
@@ -63,12 +76,6 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
-
-## Test websocket
-
-To test websocket simpler I've created a simple html page that connects to the websocket and logs the events.
-
-To test it, open `util/ws-test.html` in your browser. New data will appear in the console.
 
 ## License
 
