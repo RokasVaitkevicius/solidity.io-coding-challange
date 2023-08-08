@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ContractEventPayload, ethers } from 'ethers';
-import { EventsGatewayService } from 'src/events-gateway/events-gateway.service';
-import { SmartContractsEventsConfigService } from 'src/smart-contracts-events-config/smart-contracts-events-config.service';
-import { stringifyBigInts } from 'src/utils/replacer';
+import { EventsGatewayService } from '../events-gateway/events-gateway.service';
+import { SmartContractsEventsConfigService } from '../smart-contracts-events-config/smart-contracts-events-config.service';
+import { stringifyBigInts } from '../utils/replacer';
 
 @Injectable()
 export class SmartContractsEventsListenerService {
