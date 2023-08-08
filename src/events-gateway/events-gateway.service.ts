@@ -7,8 +7,8 @@ import {
 
 import { Server } from 'socket.io';
 
-@WebSocketGateway(8080, { namespace: 'simple-storage-events', cors: true })
-export class BcSimpleStorageEventsGateway
+@WebSocketGateway(8080, { namespace: 'events', cors: true })
+export class EventsGatewayService
   implements OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer()
@@ -22,7 +22,9 @@ export class BcSimpleStorageEventsGateway
     console.log(`Client disconnected: ${client?.id}`);
   }
 
-  emitDataChanged(newValue: string): void {
-    this.server.emit('DataChanged', { newValue });
+  emitEvent(eventName: string, data: string): void {
+    console.log(`Emitting event: ${eventName}`);
+    console.log(data);
+    this.server.emit(eventName, data);
   }
 }
