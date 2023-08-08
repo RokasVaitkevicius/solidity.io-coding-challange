@@ -14,15 +14,15 @@ export class BcSimpleStorageEventsGateway
   @WebSocketServer()
   server: Server;
 
-  handleConnection(client: any, ...args: any[]): any {
-    console.log(`Client connected: ${client.id}`);
+  handleConnection(client: any): any {
+    console.log(`Client connected: ${client?.id}`);
   }
 
   handleDisconnect(client: any): any {
-    console.log(`Client disconnected: ${client.id}`);
+    console.log(`Client disconnected: ${client?.id}`);
   }
 
-  emitDataChanged(data: any): void {
-    this.server.emit('DataChanged', data);
+  emitDataChanged(newValue: string): void {
+    this.server.emit('DataChanged', { newValue });
   }
 }

@@ -38,10 +38,9 @@ export class BcSimpleStorageService {
     return this.contract.set(Math.floor(Math.random() * 100));
   }
 
-  private handleDataChanged(from, to, event) {
-    console.log('DataChanged event', from, to, event);
-    this.bcSimpleStorageEventsGateway.emitDataChanged(
-      JSON.stringify({ from, to, event }),
+  private handleDataChanged(newValue: ethers.BigNumberish) {
+    return this.bcSimpleStorageEventsGateway.emitDataChanged(
+      newValue.toString(),
     );
   }
 }
